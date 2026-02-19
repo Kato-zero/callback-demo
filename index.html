@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Callback Demo</title>
+</head>
+<body>
+  <h1>Buy Demo Product</h1>
+  <button id="buyBtn">Pay Now</button>
+
+  <script>
+    document.getElementById("buyBtn").onclick = () => {
+      alert("Redirecting to fake payment service...");
+
+      // Simulate payment service delay
+      setTimeout(() => {
+        // Fake payment service calls your callback URL
+        fetch("/payment-callback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user: "Mark", amount: 100, status: "paid" })
+        })
+        .then(res => res.json())
+        .then(data => {
+          alert("Callback received by server: " + JSON.stringify(data));
+        });
+      }, 2000); // 2 second delay
+    };
+  </script>
+</body>
+</html>
